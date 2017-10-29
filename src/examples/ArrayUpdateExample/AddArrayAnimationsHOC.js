@@ -26,17 +26,24 @@ export default function addArrayAnimations (
             this.child,
             persistentIds
           )
+          this._updateAnimation = () => {
+            animatePersistentPositions().then(() =>
+              animateItemsIn(this.child, addedIds)
+            )
+          }
+
           animateItemsOut(this.child, removedIds).then(() => {
-            this.forceUpdate(() => {
-              animatePersistentPositions().then(() =>
-                animateItemsIn(this.child, addedIds)
-              )
-            })
+            this.forceUpdate()
           })
           return false
         } else {
+          delete this._updateAnimation
           return true
         }
+      }
+
+      componentDidUpdate () {
+        this._updateAnimation && this._updateAnimation()
       }
 
       render () {

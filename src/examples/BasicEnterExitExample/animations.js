@@ -33,10 +33,11 @@ export const animateOut = (gridContainer, callback) => {
     .timeline()
     .add({
       targets: cards,
-      duration: 500,
+      duration: 100,
       opacity: 0,
       translateY: -30,
-      delay: (el, i) => i * 100
+      delay: (el, i) => i * 50,
+      easing: 'easeInOutSine'
     })
     .add({
       targets: gridContainer,
@@ -44,7 +45,6 @@ export const animateOut = (gridContainer, callback) => {
       opacity: [1, 0],
       duration: 1000,
       complete: callback,
-      offset: '-=300',
       elasticity: 100
     })
 }
