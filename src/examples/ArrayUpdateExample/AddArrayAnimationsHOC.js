@@ -1,24 +1,50 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-export default function addArrayAnimations (
+function getComparisonData(currentProps, nextProps) {
+  const currentIds = currentProps.items.map(item => item.id)
+  const nextIds = nextProps.items.map(item => item.id)
+
+  const removedIds = currentIds.filter(id => !nextIds.includes(id))
+  const addedIds = nextIds.filter(id => !currentIds.includes(id))
+  const persistentIds = nextIds.filter(id => currentIds.includes(id))
+  return {
+    removedIds,
+    addedIds,
+    persistentIds
+  }
+}
+
+export default function addArrayAnimations(
   animateItemsIn,
   animateItemsOut,
   animatePersistentItems
 ) {
-  return function wrapComponent (WrappedComponent) {
+  return function wrapComponent(WrappedComponent) {
     return class AnimationHOC extends Component {
-      componentDidMount () {
+      state = {
+        animatingOutItems: undefined
+      }
+
+      componentDidMount() {
         animateItemsIn(this.child, this.props.items.map(item => item.id), true)
       }
-      shouldComponentUpdate (nextProps, nextState) {
-        if (nextProps.items === this.props.items) return true
-        const currentIds = this.props.items.map(item => item.id)
-        const nextIds = nextProps.items.map(item => item.id)
 
-        const removedIds = currentIds.filter(id => !nextIds.includes(id))
-        const addedIds = nextIds.filter(id => !currentIds.includes(id))
-        const persistentIds = nextIds.filter(id => currentIds.includes(id))
+      componentWillReceiveProps(nextProps) {
+        const { removedIds, addedIds } = getComparisonData(
+          this.props,
+          nextProps
+        )
+        if (removedIds.length || addedIds.length) {
+          this.setState({ animatingOutItems: this.props.items })
+        }
+      }
+
+      shouldComponentUpdate(nextProps, nextState) {
+        const { removedIds, addedIds, persistentIds } = getComparisonData(
+          this.props,
+          nextProps
+        )
 
         if (removedIds.length || addedIds.length) {
           // preload this function with previous Item positions
@@ -26,33 +52,38 @@ export default function addArrayAnimations (
             this.child,
             persistentIds
           )
-          this._updateAnimation = () => {
-            animatePersistentPositions().then(() =>
-              animateItemsIn(this.child, addedIds)
-            )
-          }
 
           animateItemsOut(this.child, removedIds).then(() => {
-            this.forceUpdate()
+            this._updateAnimation = () => {
+              animatePersistentPositions().then(() =>
+                animateItemsIn(this.child, addedIds)
+              )
+            }
+            this.setState({ animatingOutItems: undefined })
           })
           return false
         } else {
-          delete this._updateAnimation
           return true
         }
       }
 
-      componentDidUpdate () {
-        this._updateAnimation && this._updateAnimation()
+      componentDidUpdate(prevProps, prevState) {
+        if (prevState.animatingOutItems && !this.state.animatingOutItems) {
+          this._updateAnimation()
+          delete this._updateAnimation
+        }
       }
 
-      render () {
+      render() {
         const getRef = component => {
           return component && (this.child = ReactDOM.findDOMNode(component))
         }
+        const { items, ...passThroughProps } = this.props
+
         return (
           <WrappedComponent
-            {...this.props}
+            items={this.state.animatingOutItems || items}
+            {...passThroughProps}
             ref={getRef}
             defaultInvisibleItems
           />

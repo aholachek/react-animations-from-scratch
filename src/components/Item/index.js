@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Item = ({ item, defaultInvisible, showNumber }) => {
+const Item = ({ item, defaultInvisible }) => {
   let className = `item ${defaultInvisible ? 'item__invisible' : ''}`
   if (item.shape) className = `${className} item__${item.shape}`
   if (item.color) className = `${className} item__${item.color}`
@@ -12,15 +12,14 @@ const Item = ({ item, defaultInvisible, showNumber }) => {
       // we need to add this data attribute
       data-id={item.id}
     >
-      {!showNumber && item.letter ? item.letter : item.id}
+      {item.letter ? item.letter : item.id}
     </li>
   )
 }
 
 Item.propTypes = {
   item: PropTypes.object,
-  defaultInvisible: PropTypes.bool,
-  showNumber: PropTypes.number
+  defaultInvisible: PropTypes.bool
 }
 
 export default Item

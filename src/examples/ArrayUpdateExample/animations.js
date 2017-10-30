@@ -25,7 +25,7 @@ export const animateItemsOut = (ListContainer, removedIds) => {
     targets: removedItems,
     opacity: 0,
     scale: 0,
-    duration: duration / 2,
+    duration: duration/2,
     delay
   })
   return currentAnimation.finished
@@ -43,15 +43,15 @@ export const animatePersistentItems = (ListContainer, persistentIds) => {
     if (!persistentItems.length) return new Promise(resolve => resolve())
 
     const transformPositionDict = {}
-    const targets = persistentItems.filter(Item => {
-      const oldPosition = oldPositionDict[Item.dataset.id]
+    const targets = persistentItems.filter(item => {
+      const oldPosition = oldPositionDict[item.dataset.id]
       // animations might be cycling through rapidly, so just ignore this node
       if (!oldPosition) return false
-      const newPosition = Item.getBoundingClientRect()
+      const newPosition = item.getBoundingClientRect()
       const translateX = oldPosition.left - newPosition.left
       const translateY = oldPosition.top - newPosition.top
-      Item.style.transform = `translate(${translateX}px, ${translateY}px)`
-      transformPositionDict[Item.dataset.id] = {
+      item.style.transform = `translate(${translateX}px, ${translateY}px)`
+      transformPositionDict[item.dataset.id] = {
         translateX: [translateX, 0],
         translateY: [translateY, 0]
       }
@@ -59,7 +59,6 @@ export const animatePersistentItems = (ListContainer, persistentIds) => {
     })
 
     currentAnimation = anime({
-      // in case of rapid animation cycling
       targets,
       translateX: Item => transformPositionDict[Item.dataset.id].translateX,
       translateY: Item => transformPositionDict[Item.dataset.id].translateY,

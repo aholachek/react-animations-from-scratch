@@ -1,17 +1,21 @@
+html {
+  font-size: 110%;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
 }
 
 .App {
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 585px;
+  margin: 3rem 0 0 5rem;
 }
 
 .item {
-  background-color: #cfcfcf;
   margin-right: 1rem;
   margin-bottom: 1rem;
   display: flex;
@@ -21,25 +25,25 @@ body {
   height: 3rem;
   border: 0;
   border-radius: 0;
+  transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+  color: white;
 }
 
+/* sometimes entering items should be invisible until they have an enter animation applied */
 .item__invisible {
   opacity: 0;
 }
 
 .item__blue {
   background-color: #3185fc;
-  color: white;
 }
 
 .item__red {
   background-color: #ee4266;
-  color: white;
 }
 
 .item__green {
   background-color: #59c9a5;
-  color: white;
 }
 
 .item__circle {
@@ -55,21 +59,25 @@ body {
 }
 
 .list {
-  max-width: 590px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 1rem;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.list--background {
+  background: rgb(236, 236, 236);
+  padding: 1rem 0 0 1rem;
   padding-right: 0;
 }
 
-.list__background {
-  background: rgb(236, 236, 236);
-}
-
-.list ul,
 .list li {
   list-style-type: none;
+}
+
+.list__update-explanation {
+  margin-top: 1rem;
 }
 
 button {
@@ -79,6 +87,7 @@ button {
   cursor: pointer;
   margin-bottom: 2rem;
 }
+
 button:hover,
 button:focus {
   background-color: rgba(185, 185, 185, 0.3);
@@ -94,4 +103,7 @@ legend {
 
 fieldset {
   border: 0;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1rem;
 }

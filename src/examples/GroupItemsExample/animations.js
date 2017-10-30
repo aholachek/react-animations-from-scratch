@@ -1,7 +1,7 @@
 import anime from 'animejs'
 
-export const animateGroups = List => {
-  const items = [...List.querySelectorAll('.item')]
+export function animateGroups (ListComponent) {
+  const items = [...ListComponent.querySelectorAll('.item')]
   const oldPositionDict = items.reduce((acc, item) => {
     acc[item.dataset.id] = item.getBoundingClientRect()
     return acc
@@ -10,7 +10,7 @@ export const animateGroups = List => {
     const transformPositionDict = {}
     // make sure to get the new array -- React might have destroyed
     // and created new DOM nodes
-    const items = [...List.querySelectorAll('.item')]
+    const items = [...ListComponent.querySelectorAll('.item')]
     items.forEach(item => {
       const oldPosition = oldPositionDict[item.dataset.id]
       const newPosition = item.getBoundingClientRect()

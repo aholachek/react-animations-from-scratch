@@ -24,7 +24,6 @@ class App extends Component {
                 this.setState({ group: e.target.value })
               }}
             >
-              <legend>Group items</legend>
               {groups.map(s => {
                 return (
                   <label>
@@ -34,7 +33,7 @@ class App extends Component {
                       value={s}
                       checked={this.state.group === s}
                     />
-                    {s}&nbsp;
+                    &nbsp;{s === 'all' ? s : `by ${s}`}&nbsp;
                   </label>
                 )
               })}
