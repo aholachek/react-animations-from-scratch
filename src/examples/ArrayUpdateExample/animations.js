@@ -11,18 +11,18 @@ const fastForwardCurrentAnimation = () => {
   if (currentAnimation) currentAnimation.seek(currentAnimation.duration)
 }
 
-const getCards = (container, ids) => {
-  return [...container.querySelectorAll('.card')].filter(c => {
+const getItems = (container, ids) => {
+  return [...container.querySelectorAll('.item')].filter(c => {
     return ids.includes(parseInt(c.dataset.id))
   })
 }
-export const animateItemsOut = (gridContainer, removedIds) => {
+export const animateItemsOut = (ListContainer, removedIds) => {
   fastForwardCurrentAnimation()
-  const removedCards = getCards(gridContainer, removedIds)
-  if (!removedCards.length) return new Promise(resolve => resolve())
+  const removedItems = getItems(ListContainer, removedIds)
+  if (!removedItems.length) return new Promise(resolve => resolve())
 
   currentAnimation = anime({
-    targets: removedCards,
+    targets: removedItems,
     opacity: 0,
     scale: 0,
     duration: duration / 2,
@@ -31,27 +31,27 @@ export const animateItemsOut = (gridContainer, removedIds) => {
   return currentAnimation.finished
 }
 
-export const animatePersistentItems = (gridContainer, persistentIds) => {
-  const persistentCards = getCards(gridContainer, persistentIds)
-  const oldPositionDict = persistentCards.reduce((acc, card) => {
-    acc[card.dataset.id] = card.getBoundingClientRect()
+export const animatePersistentItems = (ListContainer, persistentIds) => {
+  const persistentItems = getItems(ListContainer, persistentIds)
+  const oldPositionDict = persistentItems.reduce((acc, Item) => {
+    acc[Item.dataset.id] = Item.getBoundingClientRect()
     return acc
   }, {})
   return function () {
     fastForwardCurrentAnimation()
-    const persistentCards = getCards(gridContainer, persistentIds)
-    if (!persistentCards.length) return new Promise(resolve => resolve())
+    const persistentItems = getItems(ListContainer, persistentIds)
+    if (!persistentItems.length) return new Promise(resolve => resolve())
 
     const transformPositionDict = {}
-    const targets = persistentCards.filter(card => {
-      const oldPosition = oldPositionDict[card.dataset.id]
+    const targets = persistentItems.filter(Item => {
+      const oldPosition = oldPositionDict[Item.dataset.id]
       // animations might be cycling through rapidly, so just ignore this node
       if (!oldPosition) return false
-      const newPosition = card.getBoundingClientRect()
+      const newPosition = Item.getBoundingClientRect()
       const translateX = oldPosition.left - newPosition.left
       const translateY = oldPosition.top - newPosition.top
-      card.style.transform = `translate(${translateX}px, ${translateY}px)`
-      transformPositionDict[card.dataset.id] = {
+      Item.style.transform = `translate(${translateX}px, ${translateY}px)`
+      transformPositionDict[Item.dataset.id] = {
         translateX: [translateX, 0],
         translateY: [translateY, 0]
       }
@@ -61,8 +61,8 @@ export const animatePersistentItems = (gridContainer, persistentIds) => {
     currentAnimation = anime({
       // in case of rapid animation cycling
       targets,
-      translateX: card => transformPositionDict[card.dataset.id].translateX,
-      translateY: card => transformPositionDict[card.dataset.id].translateY,
+      translateX: Item => transformPositionDict[Item.dataset.id].translateX,
+      translateY: Item => transformPositionDict[Item.dataset.id].translateY,
       opacity: 1,
       duration,
       delay
@@ -71,12 +71,12 @@ export const animatePersistentItems = (gridContainer, persistentIds) => {
   }
 }
 
-export const animateItemsIn = (gridContainer, newIds, skipAnimation) => {
+export const animateItemsIn = (ListContainer, newIds, skipAnimation) => {
   fastForwardCurrentAnimation()
-  const newCards = getCards(gridContainer, newIds)
+  const newItems = getItems(ListContainer, newIds)
 
   currentAnimation = anime({
-    targets: newCards,
+    targets: newItems,
     opacity: [0, 1],
     scale: [0, 1],
     duration: skipAnimation ? 0 : duration / 2,

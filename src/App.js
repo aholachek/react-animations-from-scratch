@@ -1,15 +1,15 @@
 import React, { Component } from "react"
 import AddAnimations from "./HOC/AddAnimations"
 import AddArrayAnimations from "./HOC/AddArrayAnimations"
-import Grid from "./Grid"
-import { animateIn, animateOut } from "./Grid/animations"
-import { animateCardsIn, animateCardsOut } from "./Card/animations"
+import List from "./List"
+import { animateIn, animateOut } from "./List/animations"
+import { animateItemsIn, animateItemsOut } from "./Item/animations"
 import { compose } from "lodash/fp"
 
-const GridWithAnimation = compose(
-  // AddArrayAnimations(animateCardsIn, animateCardsOut),
+const ListWithAnimation = compose(
+  // AddArrayAnimations(animateItemsIn, animateItemsOut),
   AddAnimations(animateIn, animateOut)
-)(Grid)
+)(List)
 
 class App extends Component {
   state = { items: 0 }
@@ -23,14 +23,14 @@ class App extends Component {
                 className="btn btn-outline-primary"
                 onClick={() => this.setState({ items: 0 })}
               >
-                Hide grid
+                Hide List
               </button>
             ) : (
               <button
                 className="btn btn-outline-primary"
                 onClick={() => this.setState({ items: 8 })}
               >
-                Show grid
+                Show List
               </button>
             )}
           </div>
@@ -57,7 +57,7 @@ class App extends Component {
             </div>
           )}
         </div>
-        <GridWithAnimation
+        <ListWithAnimation
           isVisible={!!this.state.items}
           items={[...Array(this.state.items).keys()]}
         />

@@ -21,7 +21,7 @@ export default function addArrayAnimations (
         const persistentIds = nextIds.filter(id => currentIds.includes(id))
 
         if (removedIds.length || addedIds.length) {
-          // preload this function with previous card positions
+          // preload this function with previous Item positions
           const animatePersistentPositions = animatePersistentItems(
             this.child,
             persistentIds

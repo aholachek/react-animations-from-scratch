@@ -10,7 +10,7 @@ body {
   margin: 2rem auto;
 }
 
-.card {
+.item {
   background-color: #cfcfcf;
   margin-right: 1rem;
   margin-bottom: 1rem;
@@ -23,38 +23,38 @@ body {
   border-radius: 0;
 }
 
-.card__invisible {
+.item__invisible {
   opacity: 0;
 }
 
-.card__blue {
+.item__blue {
   background-color: #3185fc;
   color: white;
 }
 
-.card__red {
+.item__red {
   background-color: #ee4266;
   color: white;
 }
 
-.card__green {
+.item__green {
   background-color: #59c9a5;
   color: white;
 }
 
-.card__circle {
+.item__circle {
   border-radius: 100%;
 }
 
-.card__rounded {
+.item__rounded {
   border-radius: 0.5rem;
 }
 
-.card__square {
+.item__square {
   border-radius: 0;
 }
 
-.grid {
+.list {
   max-width: 590px;
   display: flex;
   flex-wrap: wrap;
@@ -63,12 +63,12 @@ body {
   padding-right: 0;
 }
 
-.grid__background {
+.list__background {
   background: rgb(236, 236, 236);
 }
 
-.grid ul,
-.grid li {
+.list ul,
+.list li {
   list-style-type: none;
 }
 

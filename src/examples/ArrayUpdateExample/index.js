@@ -1,4 +1,4 @@
-import Grid from './../../components/Grid'
+import List from './../../components/List'
 import AddArrayAnimationsHOC from './AddArrayAnimationsHOC'
 import {
   animateItemsIn,
@@ -10,4 +10,4 @@ export default AddArrayAnimationsHOC(
   animateItemsIn,
   animateItemsOut,
   animatePersistentItems
-)(Grid)
+)(List)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import GridWithAnimation from './../examples/ArrayUpdateExample'
+import ListWithAnimation from './../examples/ArrayUpdateExample'
 import generateItems from './generateItems'
 
 function randomTrue(divisor) {
@@ -24,7 +24,7 @@ class App extends Component {
             Randomize Items
           </button>
         </div>
-        <GridWithAnimation items={this.state.items} showNumber />
+        <ListWithAnimation items={this.state.items} showNumber />
       </div>
     )
   }

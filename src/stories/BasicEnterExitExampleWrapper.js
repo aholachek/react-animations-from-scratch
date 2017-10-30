@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import GridWithAnimation from './../examples/BasicEnterExitExample'
+import ListWithAnimation from './../examples/BasicEnterExitExample'
 import generateItems from './generateItems'
 
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
             </button>
           )}
         </div>
-        <GridWithAnimation
+        <ListWithAnimation
           items={this.state.items}
           isVisible={this.state.items.length}
           backgroundColor={true}

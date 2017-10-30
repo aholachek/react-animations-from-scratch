@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import GridWithAnimation from './../examples/GroupItemsExample'
+import ListWithAnimation from './../examples/GroupItemsExample'
 import generateItems from './generateItems'
 
 const groups = ['all', 'color', 'shape', 'even/odd']
@@ -40,7 +40,7 @@ class App extends Component {
               })}
             </fieldset>
           </div>
-        <GridWithAnimation items={groupedItems} group={this.state.group} />
+        <ListWithAnimation items={groupedItems} group={this.state.group} />
       </div>
     )
   }
