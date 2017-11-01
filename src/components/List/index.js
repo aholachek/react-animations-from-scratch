@@ -22,18 +22,19 @@ export default class List extends React.Component {
     } = this.props
 
     const unrelatedSection = unrelatedProp ? (
-      <div className='list__update-explanation'>
+      <div className="list__update-explanation">
         <div>
           <b>{unrelatedProp}</b>
         </div>
-        An updating prop also rendered in the list container, in order to show that unrelated props data
-        will not cause the exit/update/enter animation to short-circuit.
+        Unrelated props data will not cause the exit/update/enter animation
+        to short-circuit.
       </div>
     ) : null
 
     if (Array.isArray(items)) {
       return (
         <div>
+          {unrelatedSection}
           <ul className={`list ${backgroundColor ? 'list--background' : ''}`}>
             {this.props.items.map(item => (
               <Item
@@ -43,7 +44,6 @@ export default class List extends React.Component {
               />
             ))}
           </ul>
-          {unrelatedSection}
         </div>
       )
     } else {

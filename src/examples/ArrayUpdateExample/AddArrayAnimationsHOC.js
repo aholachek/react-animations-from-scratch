@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+// function used by componentWillReceiveProps and shouldComponentUpdate
+// to figure out whether there are entering items and/or exiting items
 function getComparisonData(currentProps, nextProps) {
   const currentIds = currentProps.items.map(item => item.id)
   const nextIds = nextProps.items.map(item => item.id)
-
   const removedIds = currentIds.filter(id => !nextIds.includes(id))
   const addedIds = nextIds.filter(id => !currentIds.includes(id))
   const persistentIds = nextIds.filter(id => currentIds.includes(id))
@@ -31,13 +32,9 @@ export default function addArrayAnimations(
       }
 
       componentWillReceiveProps(nextProps) {
-        const { removedIds, addedIds } = getComparisonData(
-          this.props,
-          nextProps
-        )
-        if (removedIds.length || addedIds.length) {
+        const { removedIds } = getComparisonData(this.props, nextProps)
+        removedIds.length &&
           this.setState({ animatingOutItems: this.props.items })
-        }
       }
 
       shouldComponentUpdate(nextProps, nextState) {
@@ -47,13 +44,15 @@ export default function addArrayAnimations(
         )
 
         if (removedIds.length || addedIds.length) {
-          // preload this function with previous Item positions
+          // preload this function with previous item positions
           const animatePersistentPositions = animatePersistentItems(
             this.child,
             persistentIds
           )
 
           animateItemsOut(this.child, removedIds).then(() => {
+            // this function will be called by componentDidUpdate as soon as we set
+            // animatingOutItems state to undefined
             this._updateAnimation = () => {
               animatePersistentPositions().then(() =>
                 animateItemsIn(this.child, addedIds)
@@ -82,9 +81,9 @@ export default function addArrayAnimations(
 
         return (
           <WrappedComponent
-            items={this.state.animatingOutItems || items}
-            {...passThroughProps}
-            ref={getRef}
+            items={ this.state.animatingOutItems || items }
+            { ...passThroughProps }
+            ref={ getRef }
             defaultInvisibleItems
           />
         )
