@@ -1,6 +1,3 @@
-html {
-  font-size: 110%;
-}
 
 body {
   margin: 0;
@@ -11,7 +8,7 @@ body {
 }
 
 .App {
-  max-width: 585px;
+  max-width: 593px;
   margin: 3rem 0 0 5rem;
 }
 
@@ -85,7 +82,7 @@ button {
   border: 1px solid rgb(185, 185, 185);
   font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 button:hover,

@@ -4,12 +4,12 @@ import generateItems from './generateItems'
 
 class App extends Component {
   state = {
-    items: generateItems(20),
+    items: generateItems(27),
     isVisible: false
   }
   componentDidMount() {
     this.intervalId = setInterval(() => {
-      this.setState({ items: generateItems(20) })
+      this.setState({ items: generateItems(27) })
     }, 750)
   }
   componentWillUnmount() {

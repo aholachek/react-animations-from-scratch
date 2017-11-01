@@ -23,11 +23,10 @@ export default class List extends React.Component {
 
     const unrelatedSection = unrelatedProp ? (
       <div className="list__update-explanation">
+       Unrelated updating props will not interfere with the animation:
         <div>
           <b>{unrelatedProp}</b>
         </div>
-        Unrelated props data will not cause the exit/update/enter animation
-        to short-circuit.
       </div>
     ) : null
 
