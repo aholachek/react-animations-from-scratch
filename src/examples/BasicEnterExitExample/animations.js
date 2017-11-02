@@ -19,10 +19,10 @@ export const animateIn = ListContainer => {
     })
     .add({
       targets: items,
-      duration: 500,
+      duration: 400,
       opacity: [0, 1],
       translateY: [-30, 0],
-      delay: (el, i) => i * 100
+      delay: (el, i) => i * 75
     })
 }
 
