@@ -1,4 +1,4 @@
-[This blog post explains the techniques](https://medium.com/about-codecademy/building-animations-in-react-from-scratch-c66a582c9b65)
+[This blog post explains the techniques in more depth](https://medium.com/about-codecademy/building-animations-in-react-from-scratch-c66a582c9b65)
 
 # Building animations in React from scratch
 
